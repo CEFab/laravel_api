@@ -42,6 +42,10 @@ class AuthenticationController extends Controller
             ], 422);
         }
 
+        // Eliminar todos los tokens anteriores para este usuario
+        $user->tokens()->delete();
+
+        // Crear un nuevo token
         $token = $user->createToken('forumapp')->plainTextToken;
 
         return response([
