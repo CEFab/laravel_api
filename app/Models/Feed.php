@@ -43,4 +43,15 @@ class Feed extends Model
         // return (bool) $this->likes()->where('feed_id', $this->id)->where('user_id', auth()->id())->exists();
         return (bool) $this->likes()->where('feed_id', $this->id)->where('user_id', Auth::id())->exists();
     }
+
+    // Eliminar comentarios en cascada
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($feed) {
+            $feed->comments()->delete();
+            $feed->likes()->delete();
+        });
+    }
 }

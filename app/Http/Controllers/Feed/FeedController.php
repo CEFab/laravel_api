@@ -40,6 +40,33 @@ class FeedController extends Controller
         ], 201);
     }
 
+    public function destroy($id)
+    {
+        // Busca el post por id
+        $feed = Feed::find($id);
+
+        //Verificar si el post existe
+        if (!$feed) {
+            return response([
+                'message' => '404 Not found'
+            ], 404);
+        }
+
+        // Verificar si el usuario autenticado es el creador del post
+        if ($feed->user_id !== Auth::id()) {
+            return response([
+                'message' => 'Unauthorized'
+            ], 403);
+        }
+
+        // Eliminar el post
+        $feed->delete();
+
+        return response([
+            'message' => 'success'
+        ], 200);
+    }
+
 
     public function likePost($feed_id)
     {

@@ -20,6 +20,7 @@ Route::post('/feed/store', [FeedController::class, 'store'])->middleware('auth:s
 Route::post('/feed/like/{feed_id}', [FeedController::class, 'likePost'])->middleware('auth:sanctum');
 Route::post('/feed/comment/{feed_id}', [FeedController::class, 'comment'])->middleware('auth:sanctum');
 Route::get('/feed/comments/{feed_id}', [FeedController::class, 'getComments'])->middleware('auth:sanctum');
+Route::delete('/feed/delete/{feed_id}', [FeedController::class, 'destroy'])->middleware('auth:sanctum');    
 
 Route::get('/test', function () {
     return response([
